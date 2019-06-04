@@ -23,6 +23,13 @@ namespace Fallout.NET.TES4.Records
         public WRLD_DATASubRecord DATA { get; private set; }
         public Vector2fSubRecord NAM0 { get; private set; }
         public Vector2fSubRecord NAM9 { get; private set; }
+        public STRSubRecord NNAM { get; private set; }
+        public STRSubRecord XNAM { get; private set; }
+        public UInt32SubRecord XXXX { get; private set; }
+        public FormID XEZN { get; private set; }
+        public WRLD_PNAMSubRecord PNAM { get; private set; }
+        public FormID ZNAM { get; private set; }
+
 
         protected override void ExtractSubRecords(BetterReader reader, GameID gameID, uint size)
         {
@@ -98,6 +105,41 @@ namespace Fallout.NET.TES4.Records
                         case "NAM9":
                             NAM9 = new Vector2fSubRecord();
                             NAM9.Deserialize(stream, name);
+                            break;
+                        case "NNAM":
+                            NNAM = new STRSubRecord();
+                            NNAM.Deserialize(stream, name);
+                            break;
+                        case "XNAM":
+                            XNAM = new STRSubRecord();
+                            XNAM.Deserialize(stream, name);
+                            break;
+                        case "XXXX":
+                            //var xxxxSize = stream.ReadUInt16();
+                            //var xxxxData = stream.ReadBytes(xxxxSize);
+                            //var xxxxDataStr = System.Text.Encoding.ASCII.GetString(xxxxData);
+                            XXXX = new UInt32SubRecord();
+                            XXXX.Deserialize(stream, name);
+                            break;
+                        case "OFST":
+                            var ofstSize = Convert.ToInt32(stream.ReadUInt16());
+                            if (ofstSize == 0)
+                            {
+                                ofstSize = Convert.ToInt32(XXXX.Value);
+                            }
+                            var ofstData = stream.ReadBytes(ofstSize);
+                            break;
+                        case "XEZN":
+                            XEZN = new FormID();
+                            XEZN.Deserialize(stream, name);
+                            break;
+                        case "PNAM":
+                            PNAM = new WRLD_PNAMSubRecord();
+                            PNAM.Deserialize(stream, name);
+                            break;
+                        case "ZNAM":
+                            ZNAM = new FormID();
+                            ZNAM.Deserialize(stream, name);
                             break;
                         default:
                             var rest = stream.ReadUInt16();

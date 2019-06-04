@@ -1,4 +1,5 @@
 ﻿using Fallout.NET.Core;
+using Fallout.NET.TES4.SubRecords.CELL;
 
 namespace Fallout.NET.TES4.Records
 {
@@ -6,7 +7,7 @@ namespace Fallout.NET.TES4.Records
     {
         public STRSubRecord EDID { get; private set; }
         public STRSubRecord FULL { get; private set; }
-        public ByteSubRecord DATA { get; private set; }
+        public CELL_DATASubRecord DATA { get; private set; }
         public BytesSubRecord XCLL { get; private set; }
         public ByteSubRecord XCMT { get; private set; }
         public UInt32SubRecord XOWN { get; private set; }
@@ -44,7 +45,7 @@ namespace Fallout.NET.TES4.Records
                             break;
 
                         case "DATA":
-                            DATA = new ByteSubRecord();
+                            DATA = new CELL_DATASubRecord();
                             DATA.Deserialize(stream, name);
                             break;
 
