@@ -26,8 +26,6 @@ namespace Fallout.NET.TES4.Records
             {
                 var end = stream.Length;
 
-                //var currentResponseCollection = new ResponseSubcollection();
-
                 while (stream.Position < end)
                 {
                     name = stream.ReadString(4);

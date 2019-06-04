@@ -12,5 +12,10 @@ namespace Fallout.NET.TES4.SubRecords
             base.Deserialize(reader, name);
             Value = reader.ReadInt32();
         }
+
+        public override string ToString()
+        {
+            return Value.ToString("X");
+        }
     }
 }

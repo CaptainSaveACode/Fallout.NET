@@ -1,4 +1,7 @@
 ﻿using Fallout.NET.Core;
+using Fallout.NET.TES4.SubRecords;
+using Fallout.NET.TES4.SubRecords.WRLD;
+using System;
 
 namespace Fallout.NET.TES4.Records
 {
@@ -6,70 +9,103 @@ namespace Fallout.NET.TES4.Records
     {
         public STRSubRecord EDID { get; private set; }
         public STRSubRecord FULL { get; private set; }
-        public STRSubRecord WNAM { get; private set; }
+        public FormID WNAM { get; private set; }
         public STRSubRecord SNAM { get; private set; }
         public STRSubRecord ICON { get; private set; }
-        public UInt32SubRecord CNAM { get; private set; }
-        public UInt32SubRecord NAM2 { get; private set; }
-        public ByteSubRecord DATA { get; private set; }
-        public Vector2iSubRecord NAM0 { get; private set; }
-        public Vector2iSubRecord NAM9 { get; private set; }
+        public FormID CNAM { get; private set; }
+        public FormID NAM2 { get; private set; }
+        public FormID NAM3 { get; private set; }
+        public FloatSubRecord NAM4 { get; private set; }
+        public WRLD_DNAMSubRecord DNAM { get; private set; }
+        public WRLD_MNAMSubRecord MNAM { get; private set; }
+        public WRLD_ONAMSubRecord ONAM { get; private set; }
+        public FormID INAM { get; private set; }
+        public WRLD_DATASubRecord DATA { get; private set; }
+        public Vector2fSubRecord NAM0 { get; private set; }
+        public Vector2fSubRecord NAM9 { get; private set; }
 
         protected override void ExtractSubRecords(BetterReader reader, GameID gameID, uint size)
         {
-            base.ExtractSubRecords(reader, gameID, size);
-            
-            /*
+            var bytes = reader.ReadBytes((int)size);
             var name = string.Empty;
-            var end = reader.Position + size;
 
-            while (reader.Position < end)
+            using (var stream = new BetterMemoryReader(bytes))
             {
-                name = reader.ReadString(4);
+                var end = stream.Length;
 
-                switch (name)
+                while (stream.Position < end)
                 {
-                    case "EDID":
-                        EDID = new STRSubRecord();
-                        EDID.Deserialize(reader, name);
-                        break;
+                    name = stream.ReadString(4);
 
-                    case "FULL":
-                        FULL = new STRSubRecord();
-                        FULL.Deserialize(reader, name);
-                        break;
-
-                    case "WNAM":
-                        WNAM = new STRSubRecord();
-                        WNAM.Deserialize(reader, name);
-                        break;
-
-                    case "SNAM":
-                        SNAM = new STRSubRecord();
-                        SNAM.Deserialize(reader, name);
-                        break;
-
-                    case "DATA":
-                        DATA = new ByteSubRecord();
-                        DATA.Deserialize(reader, name);
-                        break;
-
-                    case "NAM0":
-                        NAM0 = new Vector2iSubRecord();
-                        NAM0.Deserialize(reader, name);
-                        break;
-
-                    case "NAM9":
-                        NAM9 = new Vector2iSubRecord();
-                        NAM9.Deserialize(reader, name);
-                        break;
-
-                    default:
-                        var rest = reader.ReadUInt16();
-                        reader.ReadBytes(rest);
-                        break;
+                    switch (name)
+                    {
+                        case "EDID":
+                            EDID = new STRSubRecord();
+                            EDID.Deserialize(stream, name);
+                            break;
+                        case "FULL":
+                            FULL = new STRSubRecord();
+                            FULL.Deserialize(stream, name);
+                            break;
+                        case "WNAM":
+                            WNAM = new FormID();
+                            WNAM.Deserialize(stream, name);
+                            break;
+                        case "CNAM":
+                            CNAM = new FormID();
+                            CNAM.Deserialize(stream, name);
+                            break;
+                        case "NAM2":
+                            NAM2 = new FormID();
+                            NAM2.Deserialize(stream, name);
+                            break;
+                        case "NAM3":
+                            NAM3 = new FormID();
+                            NAM3.Deserialize(stream, name);
+                            break;
+                        case "NAM4":
+                            NAM4 = new FloatSubRecord();
+                            NAM4.Deserialize(stream, name);
+                            break;
+                        case "DNAM":
+                            DNAM = new WRLD_DNAMSubRecord();
+                            DNAM.Deserialize(stream, name);
+                            break;
+                        case "ICON":
+                            ICON = new STRSubRecord();
+                            ICON.Deserialize(stream, name);
+                            break;
+                        case "MNAM":
+                            MNAM = new WRLD_MNAMSubRecord();
+                            MNAM.Deserialize(stream, name);
+                            break;
+                        case "ONAM":
+                            ONAM = new WRLD_ONAMSubRecord();
+                            ONAM.Deserialize(stream, name);
+                            break;
+                        case "INAM":
+                            INAM = new FormID();
+                            INAM.Deserialize(stream, name);
+                            break;
+                        case "DATA":
+                            DATA = new WRLD_DATASubRecord();
+                            DATA.Deserialize(stream, name);
+                            break;
+                        case "NAM0":
+                            NAM0 = new Vector2fSubRecord();
+                            NAM0.Deserialize(stream, name);
+                            break;
+                        case "NAM9":
+                            NAM9 = new Vector2fSubRecord();
+                            NAM9.Deserialize(stream, name);
+                            break;
+                        default:
+                            var rest = stream.ReadUInt16();
+                            stream.ReadBytes(rest);
+                            break;
+                    }
                 }
-            }*/
+            }
         }
     }
 }

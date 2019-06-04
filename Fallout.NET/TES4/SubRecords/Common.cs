@@ -132,4 +132,21 @@ namespace Fallout.NET.TES4.Records
             return $"X:{X.ToString()} Y:{Y.ToString()})";
         }
     }
+    public class Vector2fSubRecord : SubRecord
+    {
+        public float X { get; protected set; }
+        public float Y { get; protected set; }
+
+        public override void Deserialize(BetterReader reader, string name)
+        {
+            base.Deserialize(reader, name);
+            X = reader.ReadSingle();
+            Y = reader.ReadSingle();
+        }
+
+        public override string ToString()
+        {
+            return $"X:{X.ToString()} Y:{Y.ToString()})";
+        }
+    }
 }
