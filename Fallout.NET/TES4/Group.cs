@@ -1,4 +1,5 @@
 ﻿using Fallout.NET.Core;
+using System;
 using System.Collections.Generic;
 
 namespace Fallout.NET.TES4
@@ -20,7 +21,7 @@ namespace Fallout.NET.TES4
 
     public class Group
     {
-        protected int _parentId;
+        protected uint _parentId;
         protected string _type;
         protected uint _groupSize;
         protected byte[] _label;
@@ -32,7 +33,7 @@ namespace Fallout.NET.TES4
         protected Dictionary<GroupType, List<Group>> _subGroups;
         protected Dictionary<string, List<Record>> _records;
 
-        public int ParentID => _parentId;
+        public uint ParentID => _parentId;
 
         public string Label
         {
@@ -72,7 +73,8 @@ namespace Fallout.NET.TES4
                 case GroupType.CellPersistentChildren:
                 case GroupType.CellTemporaryChildren:
                 case GroupType.CellVisibleDistantChildren:
-                    _parentId = _label[0];
+                    //_parentId = _label[0];
+                    _parentId = BitConverter.ToUInt32(_label, 0);
                     break;
             }
 

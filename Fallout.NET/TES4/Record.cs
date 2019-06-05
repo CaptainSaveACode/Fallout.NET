@@ -78,16 +78,13 @@ namespace Fallout.NET.TES4
 
         private static byte[] Decompress(byte[] data)
         {
-            using (var compressedStream = new MemoryStream(data))
+            using (var outMemoryStream = new MemoryStream())
+            using (var outZStream = new ComponentAce.Compression.Libs.zlib.ZOutputStream(outMemoryStream))
+            using (var inMemoryStream = new MemoryStream(data))
             {
-                using (var outZStream = new ComponentAce.Compression.Libs.zlib.ZOutputStream(compressedStream, 6))
-                {
-                    using (var resultStream = new MemoryStream())
-                    {
-                        CopyStream(resultStream, outZStream);
-                        return resultStream.ToArray();
-                    }
-                }
+                CopyStream(inMemoryStream, outZStream);
+                outZStream.finish();
+                return outMemoryStream.ToArray();
             }
         }
 

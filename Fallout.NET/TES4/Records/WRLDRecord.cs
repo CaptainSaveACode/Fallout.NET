@@ -30,6 +30,7 @@ namespace Fallout.NET.TES4.Records
         public WRLD_PNAMSubRecord PNAM { get; private set; }
         public FormID ZNAM { get; private set; }
 
+        public uint Id => id;
 
         protected override void ExtractSubRecords(BetterReader reader, GameID gameID, uint size)
         {
@@ -148,6 +149,11 @@ namespace Fallout.NET.TES4.Records
                     }
                 }
             }
+        }
+
+        public override string ToString()
+        {
+            return EDID.ToString();
         }
     }
 }
