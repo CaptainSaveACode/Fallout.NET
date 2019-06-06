@@ -124,5 +124,10 @@ namespace Fallout.NET.TES4.Records
                 }
             }
         }
-	}
+
+        public override string ToString()
+        {
+            return EDID.ToString();
+        }
+    }
 }
