@@ -14,77 +14,79 @@ namespace Fallout.NET.TES4.Records
         public List<ATXTorBTXTSubRecord> BTXT { get; private set; } = new List<ATXTorBTXTSubRecord>();
         public List<ATXTorBTXTSubRecord> ATXT { get; private set; } = new List<ATXTorBTXTSubRecord>();
         public List<VTXTSubRecord> VTXT { get; private set; } = new List<VTXTSubRecord>();
-        protected override void ExtractSubRecords(BetterReader reader, GameID gameID, uint size)
-        {
-            var bytes = reader.ReadBytes((int)size);
-            var name = string.Empty;
+        
+        //protected override void ExtractSubRecords(BetterReader reader, GameID gameID, uint size)
+        //{
+        //    var bytes = reader.ReadBytes((int)size);
+        //    var name = string.Empty;
 
-            using (var stream = new BetterMemoryReader(bytes))
-            {
-                var end = stream.Length;
+        //    using (var stream = new BetterMemoryReader(bytes))
+        //    {
+        //        var end = stream.Length;
 
-                while (stream.Position < end)
-                {
-                    name = stream.ReadString(4);
+        //        while (stream.Position < end)
+        //        {
+        //            name = stream.ReadString(4);
 
-                    switch (name)
-                    {
-                        case "DATA":
-                            DATA = new BytesSubRecord();
-                            DATA.Deserialize(stream, name);
-                            break;
-                        case "VNML":
-                            VNML = new VNMLorVCLRSubRecord();
-                            VNML.Deserialize(stream, name);
-                            break;
-                        case "VCLR":
-                            VCLR = new VNMLorVCLRSubRecord();
-                            VCLR.Deserialize(stream, name);
-                            break;
-                        case "VHGT":
-                            VHGT = new VHGTSubRecord();
-                            VHGT.Deserialize(stream, name);
-                            break;
-                        case "BTXT":
-                            var btxt = new ATXTorBTXTSubRecord();
-                            btxt.Deserialize(stream, name);
-                            BTXT.Add(btxt);
+        //            switch (name)
+        //            {
+        //                case "DATA":
+        //                    DATA = new BytesSubRecord();
+        //                    DATA.Deserialize(stream, name);
+        //                    break;
+        //                case "VNML":
+        //                    VNML = new VNMLorVCLRSubRecord();
+        //                    VNML.Deserialize(stream, name);
+        //                    break;
+        //                case "VCLR":
+        //                    VCLR = new VNMLorVCLRSubRecord();
+        //                    VCLR.Deserialize(stream, name);
+        //                    break;
+        //                case "VHGT":
+        //                    VHGT = new VHGTSubRecord();
+        //                    VHGT.Deserialize(stream, name);
+        //                    break;
+        //                case "BTXT":
+        //                    var btxt = new ATXTorBTXTSubRecord();
+        //                    btxt.Deserialize(stream, name);
+        //                    BTXT.Add(btxt);
 
-                            if(BTXT.Count > 1)
-                            {
-                                break;
-                            }
+        //                    if(BTXT.Count > 1)
+        //                    {
+        //                        break;
+        //                    }
 
-                            break;
-                        case "ATXT":
-                            var atxt = new ATXTorBTXTSubRecord();
-                            atxt.Deserialize(stream, name);
-                            ATXT.Add(atxt);
+        //                    break;
+        //                case "ATXT":
+        //                    var atxt = new ATXTorBTXTSubRecord();
+        //                    atxt.Deserialize(stream, name);
+        //                    ATXT.Add(atxt);
 
-                            if (ATXT.Count > 1)
-                            {
-                                break;
-                            }
+        //                    if (ATXT.Count > 1)
+        //                    {
+        //                        break;
+        //                    }
 
-                            break;
-                        case "VTXT":
-                            var vtxt = new VTXTSubRecord();
-                            vtxt.Deserialize(stream, name);
-                            VTXT.Add(vtxt);
+        //                    break;
+        //                case "VTXT":
+        //                    var vtxt = new VTXTSubRecord();
+        //                    vtxt.Deserialize(stream, name);
+        //                    VTXT.Add(vtxt);
 
-                            if (VTXT.Count > 1)
-                            {
-                                break;
-                            }
+        //                    if (VTXT.Count > 1)
+        //                    {
+        //                        break;
+        //                    }
 
-                            break;
-                        default:
-                            var rest = stream.ReadUInt16();
-                            stream.ReadBytes(rest);
-                            break;
-                    }
-                }
-            }
-        }
-	}
+        //                    break;
+        //                default:
+        //                    var rest = stream.ReadUInt16();
+        //                    stream.ReadBytes(rest);
+        //                    break;
+        //            }
+        //        }
+        //    }
+        //}
+
+    }
 }

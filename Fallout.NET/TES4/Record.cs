@@ -36,6 +36,8 @@ namespace Fallout.NET.TES4
             get { return (flags & 0x1000) != 0; }
         }
 
+        public byte[] Data => data;
+
         public virtual void Deserialize(BetterReader reader, string name, GameID gameID)
         {
             type = name;
@@ -73,7 +75,7 @@ namespace Fallout.NET.TES4
 
         protected virtual void ExtractSubRecords(BetterReader reader, GameID gameID, uint size)
         {
-            reader.ReadBytes((int)size);
+            data = reader.ReadBytes((int)size);
         }
 
         private static byte[] Decompress(byte[] data)
