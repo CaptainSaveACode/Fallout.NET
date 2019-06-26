@@ -90,6 +90,11 @@ namespace Fallout.NET.TES4
             }
         }
 
+        /// <summary>
+        /// Used to deserialize the array of bytes in the data field. 
+        /// </summary>
+        public virtual void LoadData() { }
+
         public static void CopyStream(Stream input, Stream output)
         {
             byte[] buffer = new byte[2000];

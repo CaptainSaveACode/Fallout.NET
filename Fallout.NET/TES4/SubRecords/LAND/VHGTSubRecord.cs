@@ -8,7 +8,8 @@ namespace Fallout.NET.TES4.SubRecords.LAND
     public class VHGTSubRecord : SubRecord
     {
         public float Offset { get; protected set; }
-        public List<byte[]> Rows { get; protected set; }
+        //public List<byte[]> Rows { get; protected set; }
+        public sbyte[,] Rows { get; protected set; }
         public byte[] Unused { get; protected set; }
         public override void Deserialize(BetterReader reader, string name)
         {
@@ -16,10 +17,13 @@ namespace Fallout.NET.TES4.SubRecords.LAND
 
             Offset = reader.ReadSingle();
 
-            Rows = new List<byte[]>();
-            for(var i = 0; i < 33; i++)
+            Rows = new sbyte[33, 33];
+            for (var y = 0; y < 33; y++)
             {
-                Rows.Add(reader.ReadBytes(33));
+                for (var x = 0; x < 33; x++)
+                {
+                    Rows[y, x] = (sbyte)reader.ReadByte();
+                }
             }
 
             Unused = reader.ReadBytes(3);

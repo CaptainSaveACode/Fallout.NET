@@ -12,10 +12,7 @@ namespace Fallout.NET.TES4.Records
         public STRSubRecord EDID { get; private set; }
         public SubRecord DATA { get; private set; }
 
-        /// <summary>
-        /// Used to deserialize the array of bytes in the data field. 
-        /// </summary>
-        public void LoadData()
+        public override void LoadData()
         {
             var name = string.Empty;
 
